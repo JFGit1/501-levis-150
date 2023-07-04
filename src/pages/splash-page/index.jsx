@@ -17,7 +17,7 @@ export default function SplashPage() {
 				desc="501 Levi's 150 Anniversary"
 			/>
 
-			<TransitionEffect />
+			{/* <TransitionEffect /> */}
 			<LayoutMotion>
 				<main className='container h-[85vh] flex flex-col justify-center items-center mx-auto'>
 					<h1 className='font-bold text-2xl mb-4'>Splash Page</h1>

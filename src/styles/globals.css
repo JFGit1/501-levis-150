@@ -12,6 +12,86 @@
 	}
 }
 
+#batLogo {
+	min-height: 100vh;
+	min-width: 100vw;
+}
+#batLogoPath {
+	transform-origin: center center;
+	transform: scale(0) translate(calc(50vw - 300px), calc(50vh - 120px));
+
+	-webkit-transition: all 500ms ease-in-out;
+	-moz-transition: all 500ms ease-in-out;
+	-ms-transition: all 500ms ease-in-out;
+	-o-transition: all 500ms ease-in-out;
+	transition: all 500ms ease-in-out;
+}
+
+#batMasked {
+	clip-path: url(#batLogoPath);
+	-webkit-clip-path: url(#batLogoPath);
+}
+
+.bat-scale-up {
+	-webkit-animation: scale-up 1000ms cubic-bezier(0.39, 0.575, 0.565, 1) both;
+	animation: scale-up 1000ms cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+.bat-scale-down {
+	-webkit-animation: scale-down 600ms cubic-bezier(0.39, 0.575, 0.565, 1) both;
+	animation: scale-down 600ms cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+@-webkit-keyframes scale-up {
+	0% {
+		-webkit-transform: scale(0)
+			translate(calc(50vw - 300px), calc(50vh - 120px));
+		transform: scale(0) translate(calc(50vw - 300px), calc(50vh - 120px));
+	}
+	100% {
+		-webkit-transform: scale(6)
+			translate(calc(50vw - 300px), calc(50vh - 120px));
+		transform: scale(6) translate(calc(50vw - 300px), calc(50vh - 120px));
+	}
+}
+@keyframes scale-up {
+	0% {
+		-webkit-transform: scale(0)
+			translate(calc(50vw - 300px), calc(50vh - 120px));
+		transform: scale(0) translate(calc(50vw - 300px), calc(50vh - 120px));
+	}
+	100% {
+		-webkit-transform: scale(6)
+			translate(calc(50vw - 300px), calc(50vh - 120px));
+		transform: scale(6) translate(calc(50vw - 300px), calc(50vh - 120px));
+	}
+}
+
+@-webkit-keyframes scale-down {
+	0% {
+		-webkit-transform: scale(6)
+			translate(calc(50vw - 300px), calc(50vh - 120px));
+		transform: scale(6) translate(calc(50vw - 300px), calc(50vh - 120px));
+	}
+	100% {
+		-webkit-transform: scale(0)
+			translate(calc(50vw - 300px), calc(50vh - 120px));
+		transform: scale(0) translate(calc(50vw - 300px), calc(50vh - 120px));
+	}
+}
+@keyframes scale-down {
+	0% {
+		-webkit-transform: scale(6)
+			translate(calc(50vw - 300px), calc(50vh - 120px));
+		transform: scale(6) translate(calc(50vw - 300px), calc(50vh - 120px));
+	}
+	100% {
+		-webkit-transform: scale(0)
+			translate(calc(50vw - 300px), calc(50vh - 120px));
+		transform: scale(0) translate(calc(50vw - 300px), calc(50vh - 120px));
+	}
+}
+
 /*----- FLIP BOOK - Open -----*
 .stf__parent {
 	background-size: cover;
