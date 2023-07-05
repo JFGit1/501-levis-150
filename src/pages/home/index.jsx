@@ -18,15 +18,19 @@ export default function Home() {
 			/>
 			{/* <TransitionEffect /> */}
 			<LayoutMotion>
-				<main className='container h-[85vh] flex flex-col justify-center items-center mx-auto'>
-					<h1 className='font-bold text-2xl mb-4'>Home</h1>
-					<Link
-						href='/'
-						onClick={handleVideoLink}
-						className='border border-neutral-300 px-4 pt-2 pb-2.5 leading-none bg-white text-primary font-medium'>
-						Logout
-					</Link>
-				</main>
+				<div className='w-screen h-screen bg-cover bg-center bg-[url(/images/bg-03-1.jpg)]'>
+					<main className='container h-[85vh] flex flex-col justify-center items-center mx-auto'>
+						<h1 className='font-semibold text-5xl mt-72 mb-4 text-white '>
+							Home
+						</h1>
+						<Link
+							href='/'
+							onClick={handleVideoLink}
+							className='border border-neutral-300 px-4 pt-2 pb-2.5 leading-none bg-white text-primary font-medium'>
+							Logout
+						</Link>
+					</main>
+				</div>
 			</LayoutMotion>
 		</>
 	);

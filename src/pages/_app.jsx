@@ -22,7 +22,7 @@ export default function App({ Component, pageProps, router }) {
 		<>
 			{/* <Header /> */}
 			<VideoTransition
-				videoSrc='/videos/Video-Transition-04-2--22.mp4'
+				videoSrc='/videos/Video-Transition-04-3--22.mp4'
 				showVideo={videoVisible}
 				onVideoEnd={handleVideoEnd}
 			/>

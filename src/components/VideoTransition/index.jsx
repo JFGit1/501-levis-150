@@ -16,7 +16,7 @@ const VideoTransition = ({ videoSrc, showVideo, onVideoEnd }) => {
 				videoContainer.style.display = 'none';
 				batMasked.classList.remove('bat-scale-up');
 				batMasked.classList.remove('bat-scale-down');
-			}, 800);
+			}, 1400);
 			onVideoEnd();
 		};
 
@@ -35,7 +35,7 @@ const VideoTransition = ({ videoSrc, showVideo, onVideoEnd }) => {
 				videoContainer.style.display = 'none';
 				batMasked.classList.remove('bat-scale-up');
 				batMasked.classList.remove('bat-scale-down');
-			}, 800);
+			}, 1400);
 		}
 
 		return () => {
