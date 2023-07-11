@@ -19,7 +19,7 @@ export default function Home() {
 			/>
 			{/* <TransitionEffect /> */}
 			<LayoutMotion>
-				<div className='w-screen h-screen bg-cover bg-center bg-[url(/images/bg-03-1.jpg)]'>
+				<div className='w-screen h-screen bg-cover bg-center bg-[url(/images/poster-501-one-take-v1.jpg)]'>
 					<main className='container h-screen w-screen flex flex-col justify-center items-center'>
 						<VideoPlayer
 							className='video'
