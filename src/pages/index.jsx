@@ -1,4 +1,5 @@
 import Seo from '../components/Seo';
+import { motion } from 'framer-motion';
 import LayoutMotion from '../components/LayoutMotion';
 import TransitionEffect from '../components/TransitionEffect';
 import Link from 'next/link';
@@ -18,15 +19,16 @@ export default function Home() {
 			{/* <TransitionEffect /> */}
 			<LayoutMotion>
 				<div className='w-screen h-screen bg-cover bg-center bg-[url(/images/bg-01-1.jpg)]'>
-					<main className='container h-[85vh] flex flex-col justify-center items-center mx-auto'>
-						<h1 className='font-semibold text-5xl mt-72 mb-4 text-white '>
+					<main className='container h-[85vh] flex flex-col justify-end items-center mx-auto'>
+						{/* <h1 className='font-semibold text-5xl mt-72 mb-4 text-white '>
 							Login Page
-						</h1>
+						</h1> */}
+
 						<Link
-							href='/splash-page'
+							href='/home'
 							onClick={handleVideoLink}
-							className='border border-neutral-300 px-4 pt-2 pb-2.5 leading-none bg-white text-primary font-medium'>
-							Login
+							className='transition-all duration-300 px-8 pt-3 pb-4 uppercase leading-none bg-primary text-white hover:text-white font-medium text-2xl hover:px-10 hover:pb-6 hover:pt-5 hover:-mb-2 tracking-[0.05rem]'>
+							ENTER
 						</Link>
 					</main>
 				</div>
