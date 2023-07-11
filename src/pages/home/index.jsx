@@ -23,6 +23,7 @@ export default function Home() {
 					<main className='container h-screen w-screen flex flex-col justify-center items-center'>
 						<VideoPlayer
 							className='video'
+							poster={'/images/poster-501-one-take-v1.jpg'}
 							src={'/videos/501-one-take-v1--32.mp4'}
 							autoPlay={true}
 							muted={true}
