@@ -177,10 +177,11 @@
 /*----- FLIP BOOK - Close -----*/
 
 #__next .video video {
-	height: 100vh !important;
+	height: 100% !important;
 	left: 0 !important;
 	max-width: none !important;
 	object-fit: cover !important;
+	overflow: hidden !important;
 	top: 0 !important;
-	width: 100vw !important;
+	width: 100% !important;
 }

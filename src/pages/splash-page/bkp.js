@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react';
+import { useContext, useRef, useState, useEffect } from 'react';
 
 import Seo from '@/src/components/Seo';
 import LayoutMotion from '@/src/components/LayoutMotion';
@@ -14,24 +14,27 @@ export default function SplashPage() {
 	const videoRef = useRef(null);
 	const captureDivRef = useRef();
 	const [capturedImage, setCapturedImage] = useState('');
-	const [videoCanvas, setVideoCanvas] = useState(null);
-	const [videoDisplay, setVideoDisplay] = useState(true);
+	const [videoPaused, setVideoPaused] = useState(false);
+	const [canvas, setCanvas] = useState('');
 
 	const pauseVideo = () => {
 		console.log('pauseVideo');
-		if (!videoRef.current) return;
 		videoRef.current.pause();
 
 		const Video = videoRef.current.video;
-		const newCanvas = document.createElement('canvas');
-		newCanvas.width = Video.videoWidth;
-		newCanvas.height = Video.videoHeight;
-		Video.currentTime = videoRef.current.video.currentTime;
-		const ctx = newCanvas.getContext('2d');
-		ctx.drawImage(Video, 0, 0);
+		console.log(Video);
+		console.log(Video.currentTime);
+		console.log(Video.height);
+		console.log(Video.width);
 
-		setVideoCanvas(newCanvas);
-		setVideoDisplay(false);
+		const canvas = document.createElement('canvas');
+		canvas.width = Video.width;
+		canvas.height = Video.height;
+		Video.currentTime = videoRef.current.video.currentTime;
+		const ctx = canvas.getContext('2d');
+		ctx.drawImage(Video, 0, 0);
+		setCanvas(canvas);
+		console.log('canvas:', canvas);
 	};
 
 	return (
@@ -45,14 +48,8 @@ export default function SplashPage() {
 				<div
 					ref={captureDivRef}
 					id='capture-screenshot'
-					className='w-screen h-screen overflow-hidden bg-cover bg-center bg-no-repeat bg-[url(/images/poster-501-one-take-v1.jpg)]'>
-					<div
-						className='w-screen h-screen bg-cover bg-center bg-no-repeat overflow-hidden'
-						style={{
-							backgroundImage: videoCanvas
-								? `url(${videoCanvas.toDataURL()})`
-								: 'none',
-						}}>
+					className='w-screen h-screen overflow-hidden'>
+					<div className='w-screen h-screen bg-cover bg-center bg-[url(/images/poster-501-one-take-v1.jpg)] overflow-hidden'>
 						<main className='container h-screen w-screen flex flex-col justify-center items-center overflow-hidden'>
 							<div className='relative z-10 text-white font-medium text-2xl'>
 								<ScreenshotCapture
@@ -61,16 +58,14 @@ export default function SplashPage() {
 									setCapturedImage={setCapturedImage}
 								/>
 							</div>
-							{videoDisplay && (
-								<VideoPlayer
-									ref={videoRef}
-									className='video'
-									poster={'/images/poster-501-one-take-v1.jpg'}
-									src={'/videos/501-one-take-v1--32.mp4'}
-									autoPlay={true}
-									muted={true}
-								/>
-							)}
+							<VideoPlayer
+								ref={videoRef}
+								className='video'
+								poster={'/images/poster-501-one-take-v1.jpg'}
+								src={'/videos/501-one-take-v1--32.mp4'}
+								autoPlay={true}
+								muted={true}
+							/>
 
 							{capturedImage && (
 								<div className='z-50 bg-black top-0 left-0 fixed w-screen h-screen'>
