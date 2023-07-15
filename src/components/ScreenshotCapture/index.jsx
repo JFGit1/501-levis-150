@@ -1,9 +1,21 @@
 import React, { useEffect } from 'react';
 import html2canvas from 'html2canvas';
 
-const ScreenshotCapture = ({ captureDivRef, pauseVideo, setCapturedImage }) => {
+const ScreenshotCapture = ({
+	captureDivRef,
+	pauseVideo,
+	setCapturedImage,
+	onCapture,
+	bgFlipContainerRef,
+	captureProgress,
+}) => {
+	console.log('captureProgress', captureProgress);
 	useEffect(() => {
 		const capturarScreenshot = () => {
+			if (!captureProgress) {
+				return;
+			}
+
 			pauseVideo();
 
 			const captureDiv = captureDivRef.current;
@@ -22,36 +34,27 @@ const ScreenshotCapture = ({ captureDivRef, pauseVideo, setCapturedImage }) => {
 						console.error('Erro ao capturar screenshot:', error);
 					})
 					.finally(() => {
-						//pauseVideo();
 						console.log('end');
+						console.log(bgFlipContainerRef);
+						// bgFlipContainerRef.current.style.opacity = 1;
 					});
 			}, 60);
 		};
 
-		const btn = document.querySelector('#btn-ss');
-		btn.addEventListener('click', capturarScreenshot);
+		onCapture(capturarScreenshot);
 
 		return () => {
-			btn.removeEventListener('click', capturarScreenshot);
-			//pauseVideo();
+			onCapture(null);
 		};
-	}, [captureDivRef, pauseVideo, setCapturedImage]);
+	}, [
+		captureDivRef,
+		pauseVideo,
+		setCapturedImage,
+		onCapture,
+		bgFlipContainerRef,
+	]);
 
-	return (
-		<div>
-			<div>
-				<a
-					id='btn-ss'
-					className='text-white'
-					href='#'
-					onClick={e => {
-						e.preventDefault();
-					}}>
-					Screenshot
-				</a>
-			</div>
-		</div>
-	);
+	return null;
 };
 
 export default ScreenshotCapture;

@@ -185,3 +185,7 @@
 	top: 0 !important;
 	width: 100% !important;
 }
+
+.show-this {
+	opacity: 1 !important;
+}
