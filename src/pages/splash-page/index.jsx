@@ -58,20 +58,26 @@ export default function SplashPage() {
 				{ opacity: 0 },
 				{
 					opacity: 1,
-					duration: 1,
+					duration: 0.4,
 					ease: 'power2.out',
 				}
 			);
 			gsap.to(bgFlipInnerRef.current, {
-				delay: 0.5,
-				scale: 0.75,
+				delay: 0.4,
 				duration: 0.6,
+				scale: 0.8,
 				ease: 'power2.out',
 			});
 			gsap.to(bgFlipRightRef.current, {
 				delay: 1.2,
 				rotateY: -180,
-				duration: 0.8,
+				duration: 3.2,
+				ease: 'power4.out',
+			});
+			gsap.to(bgFlipInnerRef.current, {
+				delay: 2.5,
+				duration: 1.2,
+				opacity: 0,
 				ease: 'power2.out',
 			});
 
@@ -137,10 +143,7 @@ export default function SplashPage() {
 									className='z-50 bg-black top-0 left-0 fixed w-screen h-screen opacity-0'>
 									<div
 										ref={bgFlipInnerRef}
-										className='w-screen h-screen'
-										style={{
-											perspective: '1500px',
-										}}>
+										className='w-screen h-screen'>
 										<div className='top-0 left-0 absolute w-[50vw] h-screen overflow-hidden z-[1]'>
 											<div
 												className='w-screen h-screen bg-no-repeat bg-cover bg-center'
@@ -149,27 +152,29 @@ export default function SplashPage() {
 												}}></div>
 										</div>
 										<div
-											ref={bgFlipRightRef}
-											className='top-0 left-2/4 absolute w-[50vw] h-screen overflow-hidden z-[2] origin-left'
+											className='top-0 left-2/4 absolute w-[50vw] h-screen z-[2]'
 											style={{
-												transformStyle: 'preserve-3d',
-												transform: 'rotateY(0deg)',
+												perspective: '1600px',
 											}}>
 											<div
-												id='bg-flip-right-front'
-												className='absolute w-screen h-screen bg-no-repeat bg-cover bg-center left-0 top-0 -translate-x-2/4'
+												ref={bgFlipRightRef}
+												id='bg-flip-right-inner'
+												className='origin-left'
 												style={{
-													backgroundImage: `url(${capturedImage})`,
-													backfaceVisibility: 'hidden',
-												}}></div>
-											<div
-												id='bg-flip-right-back'
-												className='absolute w-screen h-screen bg-black left-0 top-0'
-												style={{
-													backfaceVisibility: 'hidden',
-													transform:
-														'rotateY(180deg) translateX(-50%)',
-												}}></div>
+													transformStyle: 'preserve-3d',
+												}}>
+												<div
+													id='bg-flip-right-front'
+													className='w-[50vw] overflow-hidden'>
+													<div
+														className='absolute w-screen h-screen bg-no-repeat bg-cover bg-center left-0 top-0'
+														style={{
+															backgroundImage: `url(${capturedImage})`,
+															transform: 'translateX(-50%)',
+														}}></div>
+												</div>
+												<div id='bg-flip-right-back'></div>
+											</div>
 										</div>
 									</div>
 								</div>
