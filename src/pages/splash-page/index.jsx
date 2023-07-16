@@ -1,29 +1,26 @@
-import { useContext, useRef, useState } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 
 import Seo from '@/src/components/Seo';
 import LayoutMotion from '@/src/components/LayoutMotion';
-
-import AppContext from '@/src/components/AppContext';
 import VideoPlayer from 'react-background-video-player';
 import ScreenshotCapture from '@/src/components/ScreenshotCapture';
+import { gsap } from 'gsap';
 
 export default function SplashPage() {
-	const { videoVisible, setVideoVisible, handleVideoLink, handleVideoEnd } =
-		useContext(AppContext);
-
 	const videoRef = useRef(null);
-	const navRightRef = useRef(null);
 	const captureDivRef = useRef();
-	const bgFlipContainerRef = useRef();
+	const bgFlipContainerRef = useRef(null);
+	const bgFlipInnerRef = useRef(null);
+	const bgFlipRightRef = useRef(null);
 
-	const [capturing, setCapturing] = useState(false);
 	const [capturedImage, setCapturedImage] = useState('');
 	const [videoCanvas, setVideoCanvas] = useState(null);
 	const [videoDisplay, setVideoDisplay] = useState(true);
-	const [captureProgress, setCaptureProgress] = useState(false);
+	const [capturing, setCapturing] = useState(false);
+	const [progress, setProgress] = useState(false);
+	const [bgAnimation, setBgAnimation] = useState(false);
 
 	const pauseVideo = () => {
-		console.log('pauseVideo');
 		if (!videoRef.current) return;
 		videoRef.current.pause();
 
@@ -39,18 +36,48 @@ export default function SplashPage() {
 		setVideoDisplay(false);
 	};
 
-	const handleCapture = captureFunction => {
-		console.log('a');
-		setCaptureProgress(true);
-		if (captureFunction && capturing) {
-			console.log('b');
-			captureFunction();
-		}
-	};
+	const handleCapture = useCallback(
+		captureFunction => {
+			if (captureFunction && capturing) {
+				captureFunction();
+			}
+		},
+		[capturing]
+	);
 
-	const handleCaptureFinished = () => {
-		setCaptureProgress(false);
-	};
+	const handleProgress = useCallback(() => {
+		setProgress(false);
+		setBgAnimation(true);
+	}, []);
+
+	useEffect(() => {
+		if (bgAnimation) {
+			console.log('bgFlipContainerRef');
+			gsap.fromTo(
+				bgFlipContainerRef.current,
+				{ opacity: 0 },
+				{
+					opacity: 1,
+					duration: 1,
+					ease: 'power2.out',
+				}
+			);
+			gsap.to(bgFlipInnerRef.current, {
+				delay: 0.5,
+				scale: 0.75,
+				duration: 0.6,
+				ease: 'power2.out',
+			});
+			gsap.to(bgFlipRightRef.current, {
+				delay: 1.2,
+				rotateY: -180,
+				duration: 0.8,
+				ease: 'power2.out',
+			});
+
+			setBgAnimation(false);
+		}
+	}, [bgAnimation]);
 
 	return (
 		<>
@@ -58,88 +85,96 @@ export default function SplashPage() {
 				title="501 Levi's 150 Anniversary"
 				desc="501 Levi's 150 Anniversary"
 			/>
-			{/* <TransitionEffect /> */}
 			<LayoutMotion>
-				<div className='relative'>
+				<div>
 					<button
+						className='text-white bg-primary absolute z-50 top-2/4 right-4'
+						href='#'
 						onClick={e => {
+							e.preventDefault();
 							setCapturing(true);
-						}}
-						ref={navRightRef}
-						className='absolute rounded-full flex text-lg leading-none items-center justify-center right-4 top-2/4 bg-black/50 hover:bg-primary/90 z-50 text-white h-[48px] w-[48px] -translate-y-2/4'>
-						&#x27A4;
+							setProgress(true);
+						}}>
+						Right
 					</button>
-
+				</div>
+				<div
+					ref={captureDivRef}
+					id='capture-screenshot'
+					className='w-screen h-screen max-h-screen max-w-screen overflow-hidden bg-cover bg-center bg-no-repeat bg-[url(/images/poster-501-one-take-v1.jpg)]'>
 					<div
-						ref={captureDivRef}
-						id='capture-screenshot'
-						className='w-screen h-screen overflow-hidden bg-cover bg-center bg-no-repeat bg-[url(/images/poster-501-one-take-v1.jpg)]'>
-						<div
-							className='w-screen h-screen bg-cover bg-center bg-no-repeat overflow-hidden'
-							style={{
-								backgroundImage: videoCanvas
-									? `url(${videoCanvas.toDataURL()})`
-									: 'none',
-							}}>
-							<main className='container h-screen w-screen flex flex-col justify-center items-center overflow-hidden'>
-								<div className='relative z-10 text-white font-medium text-2xl'>
-									<ScreenshotCapture
-										captureDivRef={captureDivRef}
-										pauseVideo={pauseVideo}
-										setCapturedImage={setCapturedImage}
-										onCapture={handleCapture}
-										bgFlipContainerRef={bgFlipContainerRef}
-										captureProgress={captureProgress}
-										handleCaptureFinished={handleCaptureFinished}
-									/>
-								</div>
-								{videoDisplay && (
-									<VideoPlayer
-										ref={videoRef}
-										className='video'
-										poster={'/images/poster-501-one-take-v1.jpg'}
-										src={'/videos/501-one-take-v1--32.mp4'}
-										autoPlay={true}
-										muted={true}
-									/>
-								)}
-
-								{capturedImage && (
+						className='w-screen h-screen bg-cover bg-center bg-no-repeat overflow-hidden'
+						style={{
+							backgroundImage: videoCanvas
+								? `url(${videoCanvas.toDataURL()})`
+								: 'none',
+						}}>
+						<main className='container h-[200vh] w-screen flex flex-col justify-center items-center overflow-hidden'>
+							<div className='relative z-10 text-white font-medium text-2xl'>
+								<ScreenshotCapture
+									captureDivRef={captureDivRef}
+									pauseVideo={pauseVideo}
+									setCapturedImage={setCapturedImage}
+									onCapture={handleCapture}
+									progress={progress}
+									handleProgress={handleProgress}
+								/>
+							</div>
+							{videoDisplay && (
+								<VideoPlayer
+									ref={videoRef}
+									className='video'
+									poster={'/images/poster-501-one-take-v1.jpg'}
+									src={'/videos/501-one-take-v1--32.mp4'}
+									autoPlay={true}
+									muted={true}
+								/>
+							)}
+							{capturedImage && (
+								<div
+									id='bgFlipContainerRef'
+									ref={bgFlipContainerRef}
+									className='z-50 bg-black top-0 left-0 fixed w-screen h-screen opacity-0'>
 									<div
-										ref={bgFlipContainerRef}
-										className='z-50 bg-black top-0 left-0 fixed w-screen h-screen opacity-0 transition-all duration-300'>
-										<div
-											className='w-screen h-screen'
-											style={{
-												perspective: '1000px',
-											}}>
-											<div className='top-0 left-0 absolute w-[50vw] h-screen overflow-hidden z-[1]'>
-												<div
-													className='w-screen h-screen bg-no-repeat bg-cover bg-center'
-													style={{
-														backgroundImage: `url(${capturedImage})`,
-													}}></div>
-											</div>
-
+										ref={bgFlipInnerRef}
+										className='w-screen h-screen'
+										style={{
+											perspective: '1500px',
+										}}>
+										<div className='top-0 left-0 absolute w-[50vw] h-screen overflow-hidden z-[1]'>
 											<div
-												className='top-0 left-2/4 absolute w-[50vw] h-screen overflow-hidden z-[2] origin-left'
+												className='w-screen h-screen bg-no-repeat bg-cover bg-center'
 												style={{
-													transformStyle: 'preserve-3d',
-													transition:
-														'transform 0.8s cubic-bezier(0.97, 0.44, 0.49, 0.87) 0s',
-													transform: 'rotateY(0deg)',
-												}}>
-												<div
-													className='w-screen h-screen bg-no-repeat bg-cover bg-center -translate-x-2/4'
-													style={{
-														backgroundImage: `url(${capturedImage})`,
-													}}></div>
-											</div>
+													backgroundImage: `url(${capturedImage})`,
+												}}></div>
+										</div>
+										<div
+											ref={bgFlipRightRef}
+											className='top-0 left-2/4 absolute w-[50vw] h-screen overflow-hidden z-[2] origin-left'
+											style={{
+												transformStyle: 'preserve-3d',
+												transform: 'rotateY(0deg)',
+											}}>
+											<div
+												id='bg-flip-right-front'
+												className='absolute w-screen h-screen bg-no-repeat bg-cover bg-center left-0 top-0 -translate-x-2/4'
+												style={{
+													backgroundImage: `url(${capturedImage})`,
+													backfaceVisibility: 'hidden',
+												}}></div>
+											<div
+												id='bg-flip-right-back'
+												className='absolute w-screen h-screen bg-black left-0 top-0'
+												style={{
+													backfaceVisibility: 'hidden',
+													transform:
+														'rotateY(180deg) translateX(-50%)',
+												}}></div>
 										</div>
 									</div>
-								)}
-							</main>
-						</div>
+								</div>
+							)}
+						</main>
 					</div>
 				</div>
 			</LayoutMotion>
