@@ -7,6 +7,8 @@ import VideoPlayer from 'react-background-video-player';
 import ScreenshotCapture from '@/src/components/ScreenshotCapture';
 import { gsap } from 'gsap';
 
+import { PiArrowCircleRightThin } from 'react-icons/pi';
+
 export default function SplashPage() {
 	const { videoVisible, setVideoVisible, handleVideoLink, handleVideoEnd } =
 		useContext(AppContext);
@@ -16,11 +18,11 @@ export default function SplashPage() {
 	const bgFlipContainerRef = useRef(null);
 	const bgFlipInnerRef = useRef(null);
 	const bgFlipRightRef = useRef(null);
+	const navContainer = useRef(null);
 
 	const [capturedImage, setCapturedImage] = useState(null);
 	const [videoCanvas, setVideoCanvas] = useState(null);
 	const [videoDisplay, setVideoDisplay] = useState(true);
-	const [capturing, setCapturing] = useState(false);
 	const [progress, setProgress] = useState(false);
 	const [bgAnimation, setBgAnimation] = useState(false);
 
@@ -39,15 +41,6 @@ export default function SplashPage() {
 		setVideoCanvas(newCanvas);
 		setVideoDisplay(false);
 	};
-
-	const handleCapture = useCallback(
-		captureFunction => {
-			if (captureFunction && capturing) {
-				captureFunction();
-			}
-		},
-		[capturing]
-	);
 
 	const handleProgress = useCallback(() => {
 		setProgress(false);
@@ -85,18 +78,24 @@ export default function SplashPage() {
 				ease: 'power2.out',
 			}); */
 
+			/* RESET */
 			setBgAnimation(false);
 			setTimeout(() => {
 				handleVideoLink();
 			}, 2000);
 
-			/* RESET */
 			setTimeout(() => {
 				bgFlipContainerRef.current.style.display = 'none';
 				setVideoDisplay(true);
 				setBgAnimation(false);
-				setCapturing(false);
+				//setCapturing(false);
 				setCapturedImage(null);
+
+				gsap.to(navContainer.current, {
+					opacity: 1,
+					duration: 0.4,
+					ease: 'power2.out',
+				});
 			}, 4000);
 		}
 	}, [bgAnimation]);
@@ -108,16 +107,20 @@ export default function SplashPage() {
 				desc="501 Levi's 150 Anniversary"
 			/>
 			<LayoutMotion>
-				<div>
+				<div ref={navContainer}>
 					<button
-						className='text-white absolute z-50 top-2/4 right-4'
+						className='text-white absolute z-50 top-2/4 right-4 -translate-y-1/2'
 						href='#'
 						onClick={e => {
 							e.preventDefault();
-							setCapturing(true);
 							setProgress(true);
+							gsap.to(navContainer.current, {
+								opacity: 0,
+								duration: 0.8,
+								ease: 'power2.in',
+							});
 						}}>
-						Right
+						<PiArrowCircleRightThin className='text-[64px] hover:text-[72px] hover:translate-x-2 origin-center transition-all duration-200' />
 					</button>
 				</div>
 				<div
@@ -137,7 +140,6 @@ export default function SplashPage() {
 									captureDivRef={captureDivRef}
 									pauseVideo={pauseVideo}
 									setCapturedImage={setCapturedImage}
-									onCapture={handleCapture}
 									progress={progress}
 									handleProgress={handleProgress}
 								/>

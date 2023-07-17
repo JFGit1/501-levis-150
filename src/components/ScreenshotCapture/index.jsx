@@ -12,6 +12,7 @@ const ScreenshotCapture = ({
 		if (!progress) return;
 
 		pauseVideo();
+
 		const captureDiv = captureDivRef.current;
 		setTimeout(() => {
 			html2canvas(captureDiv, {
