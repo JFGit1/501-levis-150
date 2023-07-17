@@ -65,7 +65,6 @@ const ScreenshotCapture = ({
 		if (!progress) return;
 
 		pauseVideo();
-
 		const captureDiv = captureDivRef.current;
 		setTimeout(() => {
 			console.log(captureDiv.scrollHeight);

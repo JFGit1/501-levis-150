@@ -62,24 +62,25 @@ export default function SplashPage() {
 					ease: 'power2.out',
 				}
 			);
-			gsap.to(bgFlipInnerRef.current, {
+			/* gsap.to(bgFlipInnerRef.current, {
 				delay: 0.4,
 				duration: 0.6,
 				scale: 0.8,
 				ease: 'power2.out',
-			});
+			}); */
 			gsap.to(bgFlipRightRef.current, {
-				delay: 1.2,
-				rotateY: -180,
-				duration: 3.2,
-				ease: 'power4.out',
+				// delay: 1.2,
+				delay: 0.4,
+				rotateY: -80,
+				duration: 1.4,
+				ease: 'back.in(1.7)',
 			});
-			gsap.to(bgFlipInnerRef.current, {
+			/* gsap.to(bgFlipInnerRef.current, {
 				delay: 2.5,
 				duration: 1.2,
 				opacity: 0,
 				ease: 'power2.out',
-			});
+			}); */
 
 			setBgAnimation(false);
 		}
@@ -154,7 +155,7 @@ export default function SplashPage() {
 										<div
 											className='top-0 left-2/4 absolute w-[50vw] h-screen z-[2]'
 											style={{
-												perspective: '1600px',
+												perspective: '800px',
 											}}>
 											<div
 												ref={bgFlipRightRef}

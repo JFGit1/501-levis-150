@@ -212,7 +212,7 @@
 }
 
 #bg-flip-right-back {
-	background-color: #000;
+	background-color: #000000;
 	color: #fff;
 	transform: rotateY(180deg) !important;
 }
