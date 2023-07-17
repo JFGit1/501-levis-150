@@ -1,5 +1,6 @@
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback, useContext } from 'react';
 
+import AppContext from '@/src/components/AppContext';
 import Seo from '@/src/components/Seo';
 import LayoutMotion from '@/src/components/LayoutMotion';
 import VideoPlayer from 'react-background-video-player';
@@ -7,13 +8,16 @@ import ScreenshotCapture from '@/src/components/ScreenshotCapture';
 import { gsap } from 'gsap';
 
 export default function SplashPage() {
+	const { videoVisible, setVideoVisible, handleVideoLink, handleVideoEnd } =
+		useContext(AppContext);
+
 	const videoRef = useRef(null);
 	const captureDivRef = useRef();
 	const bgFlipContainerRef = useRef(null);
 	const bgFlipInnerRef = useRef(null);
 	const bgFlipRightRef = useRef(null);
 
-	const [capturedImage, setCapturedImage] = useState('');
+	const [capturedImage, setCapturedImage] = useState(null);
 	const [videoCanvas, setVideoCanvas] = useState(null);
 	const [videoDisplay, setVideoDisplay] = useState(true);
 	const [capturing, setCapturing] = useState(false);
@@ -52,7 +56,6 @@ export default function SplashPage() {
 
 	useEffect(() => {
 		if (bgAnimation) {
-			console.log('bgFlipContainerRef');
 			gsap.fromTo(
 				bgFlipContainerRef.current,
 				{ opacity: 0 },
@@ -83,6 +86,18 @@ export default function SplashPage() {
 			}); */
 
 			setBgAnimation(false);
+			setTimeout(() => {
+				handleVideoLink();
+			}, 2000);
+
+			/* RESET */
+			setTimeout(() => {
+				bgFlipContainerRef.current.style.display = 'none';
+				setVideoDisplay(true);
+				setBgAnimation(false);
+				setCapturing(false);
+				setCapturedImage(null);
+			}, 4000);
 		}
 	}, [bgAnimation]);
 
@@ -95,7 +110,7 @@ export default function SplashPage() {
 			<LayoutMotion>
 				<div>
 					<button
-						className='text-white bg-primary absolute z-50 top-2/4 right-4'
+						className='text-white absolute z-50 top-2/4 right-4'
 						href='#'
 						onClick={e => {
 							e.preventDefault();

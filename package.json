@@ -20,6 +20,7 @@
     "react-animated-cursor": "^2.7.0",
     "react-background-video-player": "^1.1.8",
     "react-dom": "18.2.0",
+    "react-icons": "^4.10.1",
     "react-pageflip": "^2.0.3",
     "tailwindcss": "3.3.2"
   }

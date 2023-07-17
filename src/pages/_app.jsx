@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
 import Header from '../components/Header';
@@ -19,14 +19,14 @@ export default function App({ Component, pageProps, router }) {
 	const handleVideoEnd = () => {
 		setVideoVisible(false);
 	};
-	const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
+	/* const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
 		ssr: false,
-	});
+	}); */
 	return (
 		<>
 			{/* <Header /> */}
 			<VideoTransition
-				videoSrc='/videos/Video-Transition-05--22.mp4'
+				videoSrc='/videos/Video-Transition-06-3--22.mp4'
 				showVideo={videoVisible}
 				onVideoEnd={handleVideoEnd}
 			/>
@@ -44,7 +44,7 @@ export default function App({ Component, pageProps, router }) {
 					<Component {...pageProps} key={router.asPath} />
 				</AnimatePresence>
 			</AppContext.Provider>
-			<AnimatedCursor
+			{/* <AnimatedCursor
 				innerSize={12}
 				outerSize={65}
 				//color='196, 18, 41'
@@ -73,7 +73,7 @@ export default function App({ Component, pageProps, router }) {
 					'button',
 					'.link',
 				]}
-			/>
+			/> */}
 		</>
 	);
 }
