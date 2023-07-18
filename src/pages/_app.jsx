@@ -12,6 +12,11 @@ import '@/src/styles/globals.css';
 export default function App({ Component, pageProps, router }) {
 	const [videoVisible, setVideoVisible] = useState(false);
 
+	const bgVideoPages = [
+		'/videos/Video-Transition-06-3--22.mp4',
+		'/videos/Video-Transition-06-3-Pg2--22.mp4',
+	];
+
 	const handleVideoLink = () => {
 		setVideoVisible(true);
 	};
@@ -26,7 +31,7 @@ export default function App({ Component, pageProps, router }) {
 		<>
 			{/* <Header /> */}
 			<VideoTransition
-				videoSrc='/videos/Video-Transition-06-3--22.mp4'
+				videoSrc={bgVideoPages[1]}
 				showVideo={videoVisible}
 				onVideoEnd={handleVideoEnd}
 			/>

@@ -4,7 +4,7 @@
 
 @layer base {
 	body {
-		@apply cursor-default bg-neutral-grey50 text-neutral-text text-base font-light overflow-hidden;
+		@apply cursor-default bg-black text-neutral-text text-base font-light overflow-hidden;
 	}
 
 	a {

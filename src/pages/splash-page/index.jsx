@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect, useCallback, useContext } from 'react';
+import { useRouter } from 'next/router';
 
 import AppContext from '@/src/components/AppContext';
 import Seo from '@/src/components/Seo';
@@ -13,6 +14,7 @@ export default function SplashPage() {
 	const { videoVisible, setVideoVisible, handleVideoLink, handleVideoEnd } =
 		useContext(AppContext);
 
+	const router = useRouter();
 	const videoRef = useRef(null);
 	const captureDivRef = useRef();
 	const bgFlipContainerRef = useRef(null);
@@ -88,7 +90,6 @@ export default function SplashPage() {
 				bgFlipContainerRef.current.style.display = 'none';
 				setVideoDisplay(true);
 				setBgAnimation(false);
-				//setCapturing(false);
 				setCapturedImage(null);
 
 				gsap.to(navContainer.current, {
@@ -96,6 +97,8 @@ export default function SplashPage() {
 					duration: 0.4,
 					ease: 'power2.out',
 				});
+
+				router.push('/home');
 			}, 4000);
 		}
 	}, [bgAnimation]);
@@ -134,8 +137,9 @@ export default function SplashPage() {
 								? `url(${videoCanvas.toDataURL()})`
 								: 'none',
 						}}>
-						<main className='container h-[200vh] w-screen flex flex-col justify-center items-center overflow-hidden'>
+						<main className='h-screen w-screen flex flex-col justify-center items-center overflow-hidden'>
 							<div className='relative z-10 text-white font-medium text-2xl'>
+								<div className='container mx-auto'></div>
 								<ScreenshotCapture
 									captureDivRef={captureDivRef}
 									pauseVideo={pauseVideo}
