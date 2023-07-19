@@ -1,32 +1,31 @@
+import React from 'react';
 import Link from 'next/link';
+import { useTransition } from '@/src/contexts/transitionContext';
 
 export default function Header() {
+	const { startingTransition } = useTransition();
+
+	const handleClick = e => {
+		e.preventDefault();
+		const linkUrl = e.target.href;
+		startingTransition(true, linkUrl);
+	};
 	return (
-		<div className='bg-white mb-4'>
-			<header className='container mx-auto flex items-center justify-between py-2'>
-				<div className='font-black text-2xl text-black uppercase'>
-					501 LEVI'S 150<sup className='text-xs ml-1'>th</sup>
-				</div>
-				<nav>
-					<ul className='m-0 flex gap-5 p-0 text-base'>
-						<li>
-							<Link className='font-medium' href='/'>
-								Login
-							</Link>
-						</li>
-						<li>
-							<Link className='font-medium' href='/splash-page'>
-								Splash Page
-							</Link>
-						</li>
-						<li>
-							<Link className='font-medium' href='/home'>
-								Home
-							</Link>
-						</li>
-					</ul>
-				</nav>
-			</header>
-		</div>
+		<section className='fixed bg-black w-full z-50 top-0 left-0'>
+			<nav className='container h-8 flex gap-4 justify-end items-center mx-auto'>
+				<Link
+					href={'/page-a'}
+					onClick={handleClick}
+					className='flex items-center text-gray-400 hover:text-white text-base uppercase font-medium leading-none'>
+					Page A
+				</Link>
+				<Link
+					href={'/page-b'}
+					onClick={handleClick}
+					className='flex items-center text-gray-400 hover:text-white text-base uppercase font-medium leading-none'>
+					Page B
+				</Link>
+			</nav>
+		</section>
 	);
 }
