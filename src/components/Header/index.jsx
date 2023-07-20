@@ -3,12 +3,13 @@ import Link from 'next/link';
 import { useTransition } from '@/src/contexts/transitionContext';
 
 export default function Header() {
-	const { startingTransition } = useTransition();
+	const { startCapture } = useTransition();
 
 	const handleClick = e => {
 		e.preventDefault();
 		const linkUrl = e.target.href;
-		startingTransition(true, linkUrl);
+		console.log('STEP - 1');
+		startCapture(true, linkUrl);
 	};
 	return (
 		<section className='fixed bg-black w-full z-50 top-0 left-0'>

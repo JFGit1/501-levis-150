@@ -3,38 +3,53 @@ import React, { createContext, useContext, useState } from 'react';
 const TransitionContext = createContext();
 
 export const TransitionProvider = ({ children }) => {
-	// const [isTransitioning, setIsTransitioning] = useState(false);
-	// const [isStarting, setIsStarting] = useState(true);
-
-	const [isOpening, isSetOpening] = useState(true);
+	const [isFirstAccess, isSetFirstAccess] = useState(true);
 	const [isStartingTransition, isSetStartingTransition] = useState(false);
-	const [isHasBgVideo, isSetHasBgVideo] = useState(false);
+	const [isTransitionInProgress, isSetTransitionInProgress] = useState(false);
+	const [isStartCapture, isSetStartCapture] = useState(false);
+
 	const [linkNextPage, setLinkNextPage] = useState('');
+	const [bgCapturedImage, setBgCapturedImage] = useState(null);
 
-	const setOpening = value => {
-		isSetOpening(value);
+	const setFirstAccess = value => {
+		isSetFirstAccess(value);
+		// console.log('isFirstAccess:', isFirstAccess);
 	};
-	console.log('isOpening:', isOpening);
 
-	const checkPageConditions = value => {
-		isSetHasBgVideo(value);
-	};
-	console.log('isHasBgVideo:', isHasBgVideo);
-
-	const startingTransition = (value, link) => {
-		isSetStartingTransition(value);
+	const startCapture = (value, link) => {
+		console.log('STEP - 2');
+		isSetStartCapture(value);
 		setLinkNextPage(link);
+	};
+
+	function transitionInProgress(value) {
+		console.log('STEP - 5');
+		isSetTransitionInProgress(value);
+	}
+
+	const handleBgCapturedImage = value => {
+		console.log('STEP - 7');
+		setBgCapturedImage(value);
+	};
+
+	const startingTransition = value => {
+		console.log('STEP - 9', value);
+		isSetStartingTransition(value);
 	};
 
 	return (
 		<TransitionContext.Provider
 			value={{
-				isOpening,
-				setOpening,
-				isHasBgVideo,
-				checkPageConditions,
+				isStartCapture,
+				startCapture,
+				isFirstAccess,
+				setFirstAccess,
 				isStartingTransition,
 				startingTransition,
+				isTransitionInProgress,
+				transitionInProgress,
+				bgCapturedImage,
+				handleBgCapturedImage,
 				linkNextPage,
 			}}>
 			{children}
