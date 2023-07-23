@@ -18,7 +18,7 @@ function PageA() {
 
 	const [videoCanvas, setVideoCanvas] = useState(null);
 	const [isVideoDisplay, setIsVideoDisplay] = useState(false);
-	const [hasBgVideo, setHasBgVideo] = useState(false);
+	const hasBgVideo = false;
 
 	const handleVideoCanvas = useCallback((canvas, display) => {
 		setVideoCanvas(canvas);
@@ -58,13 +58,15 @@ function PageA() {
 						className='w-screen h-screen bg-cover bg-center bg-no-repeat overflow-hidden'
 						style={{
 							backgroundImage: videoCanvas
-								? `url(${videoCanvas.toDataURL()})`
+								? `url(${videoCanvas})`
 								: 'none',
 						}}>
 						<main className='container h-full flex flex-col justify-center items-center mx-auto relative z-10'>
+							{/* CONTENT HERE - Open */}
 							<h1 className='text-7xl text-white font-semibold'>
 								Page B
 							</h1>
+							{/* CONTENT HERE - Close */}
 						</main>
 						{isVideoDisplay && hasBgVideo && (
 							<BgVideo ref={bgVideoRef} src={''} poster={''} />

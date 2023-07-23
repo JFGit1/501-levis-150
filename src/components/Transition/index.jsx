@@ -2,15 +2,10 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useTransition } from '@/src/contexts/transitionContext';
 import { gsap } from 'gsap';
+import VideoTransition from '../VideoTransition';
 
 const Transition = () => {
 	const router = useRouter();
-
-	/* const bgVideoPages = [
-		'/videos/Video-Transition-06-3--22.mp4',
-		'/videos/Video-Transition-06-3-Pg2--22.mp4',
-	]; */
-
 	const {
 		isStartingTransition,
 		startingTransition,
@@ -25,8 +20,21 @@ const Transition = () => {
 	const bgCaptureFlipInnerRef = useRef(null);
 	const bgCaptureFlipRightRef = useRef(null);
 
+	const [isVideoTransition, setIsVideoTransition] = useState(false);
+
+	const bgVideoPages = [
+		'/videos/Video-Transition-06-3--22.mp4',
+		'/videos/Video-Transition-06-3-Pg2--22.mp4',
+	];
+
+	const handleEndedVideo = () => {
+		console.log('STEP - 14');
+		setIsVideoTransition(false);
+	};
+
 	useEffect(() => {
 		if (isStartingTransition && isTransitionInProgress) {
+			console.log('STEP - 10');
 			// GO TO NEXT PAGE
 			router.push(linkNextPage);
 
@@ -34,6 +42,7 @@ const Transition = () => {
 				bgCaptureFlipRef.current,
 				{ opacity: 0 },
 				{
+					delay: 0.2,
 					opacity: 1,
 					duration: 0.4,
 					ease: 'power2.out',
@@ -48,16 +57,30 @@ const Transition = () => {
 			});
 
 			setTimeout(() => {
-				//RESET THE TRANSITION
+				console.log('STEP - 11');
+				setIsVideoTransition(true);
+			}, 1700);
+
+			//RESET THE TRANSITION
+			setTimeout(() => {
+				console.log('--- Reset');
 				startCapture(false, '');
 				transitionInProgress(false);
 				startingTransition(false);
+				console.log('--- Reset');
 			}, 4000);
 		}
 	}, [isStartingTransition, isTransitionInProgress]);
 
 	return (
 		<>
+			{isVideoTransition && (
+				<VideoTransition
+					videoSrc={bgVideoPages[0]}
+					showVideo={isVideoTransition}
+					handleEndedVideo={handleEndedVideo}
+				/>
+			)}
 			{isStartingTransition && (
 				<div
 					id='bgCaptureFlipRef'

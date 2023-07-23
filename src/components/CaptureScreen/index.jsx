@@ -27,10 +27,7 @@ const CaptureScreen = ({
 	const handleCaptureScreen = useCallback(() => {
 		console.log('STEP - 4');
 		const numDelay = hasBgVideo ? 80 : 0;
-
-		// console.log('numDelay:', numDelay);
-		// console.log('bgVideoRef', bgVideoRef);
-		// console.log('hasBgVideo:', hasBgVideo);
+		const imageQuality = 0.85;
 
 		if (hasBgVideo) {
 			bgVideoRef.current.pause();
@@ -42,18 +39,22 @@ const CaptureScreen = ({
 			Video.currentTime = bgVideoRef.current.currentTime;
 			const ctx = newCanvas.getContext('2d');
 			ctx.drawImage(Video, 0, 0);
+			const compressedImageDataUrl = newCanvas.toDataURL(
+				'image/jpeg',
+				imageQuality
+			);
 
-			handleVideoCanvas(newCanvas, false);
+			handleVideoCanvas(compressedImageDataUrl, false);
 		}
 
 		const captureDiv = captureDivRef.current;
 		// console.log('captureDiv:', captureDiv);
 		setTimeout(() => {
 			htmlToImage
-				.toPng(captureDiv)
+				.toJpeg(captureDiv, { quality: imageQuality })
 				.then(dataUrl => {
-					//console.log('Image captured:', dataUrl);
 					console.log('STEP - 6');
+					//console.log('Image captured:', dataUrl);
 					handleBgCapturedImage(dataUrl);
 				})
 				.catch(error => {

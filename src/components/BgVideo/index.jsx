@@ -1,25 +1,40 @@
 import React, { useEffect, useRef } from 'react';
+import { useTransition } from '@/src/contexts/transitionContext';
 
 const BgVideo = React.forwardRef(
 	({ src, poster, className, autoPlay }, ref) => {
 		const videoRef = useRef(null);
 
+		const {
+			isFirstAccess,
+			setFirstAccess,
+			isTransitionEnded,
+			isSetTransitionEnded,
+		} = useTransition();
+
 		src = src || '';
 		poster = poster || '';
 		className = className || 'bg-video-player';
-		autoPlay = autoPlay || true;
+		autoPlay = autoPlay === undefined ? true : autoPlay;
+		console.log('autoPlay:', autoPlay);
 
 		useEffect(() => {
-			if (videoRef.current) {
+			if (isFirstAccess) {
 				videoRef.current.play();
+				setFirstAccess(false);
 			}
-		}, []);
 
-		useEffect(() => {
+			console.log('isTransitionEnded:', isTransitionEnded);
+			if (isTransitionEnded === true) {
+				console.log('???');
+				videoRef.current.play();
+				isSetTransitionEnded(false);
+			}
+
 			if (ref) {
 				ref.current = videoRef.current;
 			}
-		}, [ref]);
+		}, [isFirstAccess, isTransitionEnded, ref]);
 
 		return (
 			<video

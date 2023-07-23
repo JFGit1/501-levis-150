@@ -18,7 +18,7 @@
 }
 #batLogoPath {
 	transform-origin: center center;
-	transform: scale(0) translate(calc(50vw - 300px), calc(50vh - 120px));
+	transform: scale(6) translate(calc(50vw - 300px), calc(50vh - 120px));
 
 	-webkit-transition: all 500ms ease-in-out;
 	-moz-transition: all 500ms ease-in-out;

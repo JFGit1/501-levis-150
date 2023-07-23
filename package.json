@@ -10,20 +10,17 @@
   },
   "dependencies": {
     "autoprefixer": "10.4.14",
-    "dom-to-image": "^2.6.0",
     "framer-motion": "^10.12.18",
     "gsap": "^3.12.2",
     "html-to-image": "^1.11.11",
-    "html2canvas": "^1.4.1",
     "next": "13.4.7",
     "postcss": "8.4.24",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-animated-cursor": "^2.7.0",
-    "react-background-video-player": "^1.1.8",
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
-    "react-pageflip": "^2.0.3",
     "tailwindcss": "3.3.2"
-  }
+  },
+  "devDependencies": {}
 }
