@@ -11,7 +11,7 @@ export default function App({ Component, pageProps, router }) {
 		<>
 			<TransitionProvider>
 				<Transition />
-				<Header />
+				{/* <Header /> */}
 				<AnimatePresence
 					mode='wait'
 					initial={false}
