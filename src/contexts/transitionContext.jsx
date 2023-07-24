@@ -7,10 +7,12 @@ export const TransitionProvider = ({ children }) => {
 	const [isStartingTransition, isSetStartingTransition] = useState(false);
 	const [isTransitionInProgress, isSetTransitionInProgress] = useState(false);
 	const [isStartCapture, isSetStartCapture] = useState(false);
+	const [isBgVideoDisplay, setIsBgVideoDisplay] = useState(true);
 	const [isTransitionEnded, isSetTransitionEnded] = useState(false);
 
 	const [linkNextPage, setLinkNextPage] = useState('');
 	const [bgCapturedImage, setBgCapturedImage] = useState(null);
+	const [indexBgTransitions, setIndexBgTransitions] = useState(0);
 
 	const setFirstAccess = value => {
 		isSetFirstAccess(value);
@@ -37,6 +39,17 @@ export const TransitionProvider = ({ children }) => {
 		console.log('STEP - 9');
 		isSetStartingTransition(value);
 	};
+
+	const bgVideoDisplay = value => {
+		console.log('STEP - bgVideoDisplay ???');
+		setIsBgVideoDisplay(value);
+	};
+
+	const handleIndexBgTransitions = value => {
+		console.log('STEP - handleIndexBgTransitions ???');
+		setIndexBgTransitions(value);
+	};
+
 	const transitionEnded = value => {
 		console.log('STEP - 15');
 		console.log('*** End');
@@ -59,6 +72,10 @@ export const TransitionProvider = ({ children }) => {
 				linkNextPage,
 				isTransitionEnded,
 				isSetTransitionEnded,
+				isBgVideoDisplay,
+				bgVideoDisplay,
+				indexBgTransitions,
+				handleIndexBgTransitions,
 			}}>
 			{children}
 		</TransitionContext.Provider>

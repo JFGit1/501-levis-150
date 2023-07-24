@@ -9,8 +9,13 @@ import CaptureScreen from '../components/CaptureScreen';
 
 import { PiArrowCircleRightThin } from 'react-icons/pi';
 
-function PageA() {
-	const { isFirstAccess, setFirstAccess } = useTransition();
+function PageB() {
+	const {
+		isFirstAccess,
+		setFirstAccess,
+		startCapture,
+		handleIndexBgTransitions,
+	} = useTransition();
 
 	// Capture Screen
 	const captureDivRef = useRef();
@@ -64,10 +69,25 @@ function PageA() {
 						<main className='container h-full flex flex-col justify-center items-center mx-auto relative z-10'>
 							{/* CONTENT HERE - Open */}
 							<h1 className='text-7xl text-white font-semibold'>
-								Page B
+								Workshop
 							</h1>
+
 							{/* CONTENT HERE - Close */}
 						</main>
+						<button
+							className='text-white absolute z-50 top-2/4 right-4 -translate-y-1/2'
+							href='/page-a'
+							onClick={e => {
+								e.preventDefault();
+								// const linkUrl = e.currentTarget.href;
+								const linkUrl = e.target.baseURI;
+								console.log('linkUrl:', linkUrl);
+								console.log('STEP - 1');
+								handleIndexBgTransitions(1);
+								startCapture(true, '/page-a');
+							}}>
+							<PiArrowCircleRightThin className='text-[64px] hover:text-[72px] hover:translate-x-2 origin-center transition-all duration-200' />
+						</button>
 						{isVideoDisplay && hasBgVideo && (
 							<BgVideo ref={bgVideoRef} src={''} poster={''} />
 						)}
@@ -78,4 +98,4 @@ function PageA() {
 	);
 }
 
-export default PageA;
+export default PageB;

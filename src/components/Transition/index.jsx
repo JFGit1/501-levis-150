@@ -14,6 +14,8 @@ const Transition = () => {
 		startCapture,
 		linkNextPage,
 		bgCapturedImage,
+		bgVideoDisplay,
+		indexBgTransitions,
 	} = useTransition();
 
 	const bgCaptureFlipRef = useRef(null);
@@ -22,9 +24,9 @@ const Transition = () => {
 
 	const [isVideoTransition, setIsVideoTransition] = useState(false);
 
-	const bgVideoPages = [
+	const bgVideoTransitions = [
 		'/videos/Video-Transition-06-3--22.mp4',
-		'/videos/Video-Transition-06-3-Pg2--22.mp4',
+		'/videos/Video-Transition-07--22.mp4',
 	];
 
 	const handleEndedVideo = () => {
@@ -64,6 +66,7 @@ const Transition = () => {
 			//RESET THE TRANSITION
 			setTimeout(() => {
 				console.log('--- Reset');
+				bgVideoDisplay(true);
 				startCapture(false, '');
 				transitionInProgress(false);
 				startingTransition(false);
@@ -76,7 +79,7 @@ const Transition = () => {
 		<>
 			{isVideoTransition && (
 				<VideoTransition
-					videoSrc={bgVideoPages[0]}
+					videoSrc={bgVideoTransitions[indexBgTransitions]}
 					showVideo={isVideoTransition}
 					handleEndedVideo={handleEndedVideo}
 				/>

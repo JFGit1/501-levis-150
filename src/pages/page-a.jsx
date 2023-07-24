@@ -10,33 +10,46 @@ import CaptureScreen from '../components/CaptureScreen';
 import { PiArrowCircleRightThin } from 'react-icons/pi';
 
 function PageA() {
-	const { isFirstAccess, setFirstAccess } = useTransition();
+	// BACKGROUND VIDEO - Setup
+	const hasBgVideo = true;
+	const bgVideoSrc = '/videos/501-one-take-v1--32.mp4';
+	const bgVideoPoster = '/images/poster-501-one-take-v1.jpg';
+
+	const {
+		isFirstAccess,
+		setFirstAccess,
+		isBgVideoDisplay,
+		bgVideoDisplay,
+		startCapture,
+		handleIndexBgTransitions,
+	} = useTransition();
 
 	// Capture Screen
 	const captureDivRef = useRef();
 	const bgVideoRef = useRef(null);
 
-	const [isVideoDisplay, setIsVideoDisplay] = useState(true);
 	const [videoCanvas, setVideoCanvas] = useState(null);
-	const hasBgVideo = true;
 
 	const handleVideoCanvas = useCallback((canvas, display) => {
+		console.log('???');
 		setVideoCanvas(canvas);
 
 		if (display) {
-			setIsVideoDisplay(display);
+			console.log('??? aaa');
+			bgVideoDisplay(display);
 		} else {
+			console.log('??? bbb');
 			setTimeout(() => {
-				setIsVideoDisplay(display);
+				bgVideoDisplay(display);
 			}, 60);
 		}
 	});
 
-	/* useEffect(() => {
+	useEffect(() => {
 		if (isFirstAccess) {
 			setFirstAccess(false);
 		}
-	}, []); */
+	}, []);
 
 	return (
 		<>
@@ -64,16 +77,30 @@ function PageA() {
 						<main className='container h-full flex flex-col justify-center items-center mx-auto relative z-10'>
 							{/* CONTENT HERE - Open */}
 							<h1 className='text-7xl text-white font-semibold'>
-								Page A
+								501 Digital Experience
 							</h1>
 							{/* CONTENT HERE - Close */}
 						</main>
-						{isVideoDisplay && hasBgVideo && (
+						<button
+							className='text-white absolute z-50 top-2/4 right-4 -translate-y-1/2'
+							href='/page-b'
+							onClick={e => {
+								e.preventDefault();
+								// const linkUrl = e.currentTarget.href;
+								const linkUrl = e.target.baseURI;
+								console.log('linkUrl:', linkUrl);
+								console.log('STEP - 1');
+								handleIndexBgTransitions(0);
+								startCapture(true, '/page-b');
+							}}>
+							<PiArrowCircleRightThin className='text-[64px] hover:text-[72px] hover:translate-x-2 origin-center transition-all duration-200' />
+						</button>
+						{isBgVideoDisplay && hasBgVideo && (
 							<BgVideo
 								ref={bgVideoRef}
-								src={'/videos/501-one-take-v1--32.mp4'}
-								poster={'/images/poster-501-one-take-v1.jpg'}
-								autoPlay={false}
+								src={bgVideoSrc}
+								poster={bgVideoPoster}
+								autoPlay={true}
 							/>
 						)}
 					</div>
