@@ -27,6 +27,7 @@ const Transition = () => {
 	const bgVideoTransitions = [
 		'/videos/Video-Transition-06-3--22.mp4',
 		'/videos/Video-Transition-07--22.mp4',
+		'/videos/video.webm',
 	];
 
 	const handleEndedVideo = () => {

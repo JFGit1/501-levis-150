@@ -79,6 +79,23 @@ function Home() {
 							<h1 className='text-7xl text-white font-semibold'>
 								501 Digital Experience
 							</h1>
+
+							{/* <video
+								controls={true}
+								loop
+								autoPlay
+								style={{
+									height: '100%',
+									left: '0px',
+									objectFit: 'cover',
+									overflow: 'hidden',
+									position: 'absolute',
+									top: '0px',
+									width: '100%',
+									zIndex: '0',
+								}}>
+								<source src='/videos/video.webm' type='video/mp4' />
+							</video> */}
 							{/* CONTENT HERE - Close */}
 						</main>
 						<button

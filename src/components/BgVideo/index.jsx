@@ -18,6 +18,7 @@ const BgVideo = React.forwardRef(({ src, poster, className }, ref) => {
 	useEffect(() => {
 		if (isFirstAccess) {
 			console.log('Background video started');
+			videoRef.defaultPlaybackRate = 16;
 			videoRef.current.play();
 			setFirstAccess(false);
 		}
@@ -27,6 +28,7 @@ const BgVideo = React.forwardRef(({ src, poster, className }, ref) => {
 			isSetTransitionEnded(false);
 			console.log('Play BG Video');
 			videoRef.currentTime = 0;
+			videoRef.defaultPlaybackRate = 16;
 			videoRef.current.play();
 		}
 
