@@ -16,7 +16,7 @@ function Home() {
 	const bgVideoSrc = '/videos/501-denim-workshop-v1--32.mp4';
 	const bgVideoPoster = '/images/poster-501-denim-workshop-v1.jpg';
 
-	const { handleStartingTransition } = useTransition();
+	const { handleStartingTransition, handleMenuOpen } = useTransition();
 
 	const handleClick = e => {
 		console.log('STEP - 01');
@@ -25,6 +25,9 @@ function Home() {
 		const linkUrl = e.currentTarget.getAttribute('href');
 		const indexTransition = e.currentTarget.getAttribute('indextransition');
 		handleStartingTransition(true, linkUrl, indexTransition);
+		setTimeout(() => {
+			handleMenuOpen(false);
+		}, 1000);
 	};
 
 	return (
@@ -33,7 +36,7 @@ function Home() {
 				title="Workshop - 501 Levi's 150 Anniversary"
 				desc="501 Levi's 150 Anniversary"
 			/>
-			<Header />
+			<Header pageTitle='Workshop' />
 			<LayoutMotion>
 				<div
 					className='w-screen h-screen bg-cover bg-center bg-black'

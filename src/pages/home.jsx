@@ -16,7 +16,7 @@ function Home() {
 	const bgVideoSrc = '/videos/501-one-take-v1--32.mp4';
 	const bgVideoPoster = '/images/poster-501-one-take-v1.jpg';
 
-	const { handleStartingTransition } = useTransition();
+	const { handleStartingTransition, handleMenuOpen } = useTransition();
 
 	const handleClick = e => {
 		console.log('STEP - 01');
@@ -25,6 +25,9 @@ function Home() {
 		const linkUrl = e.currentTarget.getAttribute('href');
 		const indexTransition = e.currentTarget.getAttribute('indextransition');
 		handleStartingTransition(true, linkUrl, indexTransition);
+		setTimeout(() => {
+			handleMenuOpen(false);
+		}, 1000);
 	};
 
 	return (

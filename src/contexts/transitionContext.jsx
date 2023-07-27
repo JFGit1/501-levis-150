@@ -10,30 +10,37 @@ export const TransitionProvider = ({ children }) => {
 		'/videos/501-one-take-v1--32.mp4',
 	];
 
-	const [isFirstAccess, isSetFirstAccess] = useState(true);
-	const [isMutedVideos, isSetMutedVideos] = useState(true);
+	const [isFirstAccess, setIsFirstAccess] = useState(true);
+	const [isMutedVideos, setIsMutedVideos] = useState(true);
 	const [isFadingOut, setIsFadingOut] = useState(false);
 
-	const [isStartingTransition, isSetStartingTransition] = useState(false);
-	const [isTransitionInProgress, isSetTransitionInProgress] = useState(false);
-	const [isTransitionEnded, isSetTransitionEnded] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+	const [isStartingTransition, setIsStartingTransition] = useState(false);
+	const [isTransitionInProgress, setIsTransitionInProgress] = useState(false);
+	const [isTransitionEnded, setIsTransitionEnded] = useState(false);
 
 	const [indexBgTransitions, setIndexBgTransitions] = useState(0);
 	const [linkNextPage, setLinkNextPage] = useState('');
 
 	const handleFirstAccess = value => {
-		isSetFirstAccess(value);
+		setIsFirstAccess(value);
 		console.log('isFirstAccess:', isFirstAccess);
 	};
 
 	const handleMutedVideos = value => {
 		console.log('STEP - handleMutedVideos');
-		isSetMutedVideos(value);
+		setIsMutedVideos(value);
 	};
 
 	const handleFadingOut = value => {
 		console.log('STEP - handleFadingOut');
 		setIsFadingOut(value);
+	};
+
+	const handleMenuOpen = value => {
+		console.log('Menu: ', value);
+		setIsMenuOpen(value);
 	};
 
 	const handleVideoPreloaderRun = value => {
@@ -49,17 +56,17 @@ export const TransitionProvider = ({ children }) => {
 		} else {
 			console.log('STEP - 05');
 		}
-		isSetStartingTransition(value);
+		setIsStartingTransition(value);
 	};
 
 	const handleTransitionInProgress = value => {
 		console.log('STEP - handleTransitionInProgress');
-		isSetTransitionInProgress(value);
+		setIsTransitionInProgress(value);
 	};
 
 	const handleSetTransitionEnded = value => {
 		console.log('STEP - handleSetTransitionEnded');
-		isSetTransitionEnded(value);
+		setIsTransitionEnded(value);
 	};
 
 	const handleIndexBgTransitions = value => {
@@ -74,6 +81,9 @@ export const TransitionProvider = ({ children }) => {
 				handleFirstAccess,
 
 				primaryVideoUrls,
+
+				isMenuOpen,
+				handleMenuOpen,
 
 				indexBgTransitions,
 				handleIndexBgTransitions,

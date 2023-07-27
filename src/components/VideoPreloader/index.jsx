@@ -1,3 +1,32 @@
+import { useEffect, useState } from 'react';
+import { useTransition } from '@/src/contexts/transitionContext';
+
+const VideoPreloader = () => {
+	const { primaryVideoUrls } = useTransition();
+
+	const [isVideoPreloaderRun, setIsVideoPreloaderRun] = useState(false);
+
+	useEffect(() => {
+		const videoUrls = primaryVideoUrls;
+		const preloadVideo = url => {
+			const video = new Audio(url);
+			video.preload = 'auto';
+		};
+		if (!isVideoPreloaderRun) {
+			console.log('Video Preloader');
+			setIsVideoPreloaderRun(false);
+			videoUrls.forEach(url => {
+				preloadVideo(url);
+				console.log('url:', url);
+			});
+		}
+	}, [isVideoPreloaderRun]);
+
+	return null;
+};
+
+export default VideoPreloader;
+
 /* import { useTransition } from '@/src/contexts/transitionContext';
 import { useEffect, useState } from 'react';
 
@@ -53,32 +82,3 @@ const VideoPreloader = () => {
 };
 
 export default VideoPreloader; */
-
-import { useEffect, useState } from 'react';
-import { useTransition } from '@/src/contexts/transitionContext';
-
-const VideoPreloader = () => {
-	const { primaryVideoUrls } = useTransition();
-
-	const [isVideoPreloaderRun, setIsVideoPreloaderRun] = useState(false);
-
-	useEffect(() => {
-		const videoUrls = primaryVideoUrls;
-		const preloadVideo = url => {
-			const video = new Audio(url);
-			video.preload = 'auto';
-		};
-		if (!isVideoPreloaderRun) {
-			console.log('Video Preloader');
-			setIsVideoPreloaderRun(false);
-			videoUrls.forEach(url => {
-				preloadVideo(url);
-				console.log('url:', url);
-			});
-		}
-	}, [isVideoPreloaderRun]);
-
-	return null;
-};
-
-export default VideoPreloader;
