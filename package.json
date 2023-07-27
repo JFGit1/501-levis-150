@@ -12,7 +12,6 @@
     "autoprefixer": "10.4.14",
     "framer-motion": "^10.12.18",
     "gsap": "^3.12.2",
-    "html-to-image": "^1.11.11",
     "next": "13.4.7",
     "postcss": "8.4.24",
     "prop-types": "^15.8.1",
