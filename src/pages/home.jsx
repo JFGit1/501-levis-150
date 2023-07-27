@@ -18,10 +18,19 @@ function Home() {
 
 	const { handleStartingTransition } = useTransition();
 
+	const handleClick = e => {
+		console.log('STEP - 01');
+		e.preventDefault();
+
+		const linkUrl = e.currentTarget.getAttribute('href');
+		const indexTransition = e.currentTarget.getAttribute('indextransition');
+		handleStartingTransition(true, linkUrl, indexTransition);
+	};
+
 	return (
 		<>
 			<Seo
-				title="Home - 501 Levi's 150 Anniversary"
+				title="501 Levi's 150 Anniversary"
 				desc="501 Levi's 150 Anniversary"
 			/>
 			<Header />
@@ -40,15 +49,8 @@ function Home() {
 					<Link
 						href='/workshop'
 						indextransition='1'
-						className='text-white absolute z-50 top-2/4 right-4 -translate-y-1/2'
-						onClick={e => {
-							console.log('STEP - 01');
-							e.preventDefault();
-							const linkUrl = e.currentTarget.getAttribute('href');
-							const indexTransition =
-								e.currentTarget.getAttribute('indextransition');
-							handleStartingTransition(true, linkUrl, indexTransition);
-						}}>
+						onClick={handleClick}
+						className='text-white absolute z-50 top-2/4 right-4 -translate-y-1/2'>
 						<PiArrowCircleRightThin className='text-[64px] hover:text-[72px] hover:translate-x-2 origin-center transition-all duration-200' />
 					</Link>
 					{hasBgVideo && (

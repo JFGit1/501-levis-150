@@ -80,10 +80,11 @@ const VideoTransition = () => {
 						<video
 							ref={videoRef}
 							className='absolute object-cover top-0 left-0 z-50 w-screen h-screen'
-							src={videoSrc}
+							poster='/images/video-transition-poster-01-1.jpg'
 							muted
-							autoPlay
-						/>
+							autoPlay>
+							<source src={videoSrc} type='video/mp4' />
+						</video>
 					</div>
 					<svg id='batLogo' height={0} width={0}>
 						<clipPath ref={batMaskedRef} id='batLogoPath'>

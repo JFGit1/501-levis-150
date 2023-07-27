@@ -6,15 +6,13 @@ export const TransitionProvider = ({ children }) => {
 	const primaryVideoUrls = [
 		'/videos/Video-Transition-06-3--22.mp4',
 		'/videos/Video-Transition-07--22.mp4',
-	];
-
-	const secondaryVideoUrls = [
 		'/videos/501-denim-workshop-v1--32.mp4',
 		'/videos/501-one-take-v1--32.mp4',
 	];
 
 	const [isFirstAccess, isSetFirstAccess] = useState(true);
 	const [isMutedVideos, isSetMutedVideos] = useState(true);
+	const [isFadingOut, setIsFadingOut] = useState(false);
 
 	const [isStartingTransition, isSetStartingTransition] = useState(false);
 	const [isTransitionInProgress, isSetTransitionInProgress] = useState(false);
@@ -33,10 +31,24 @@ export const TransitionProvider = ({ children }) => {
 		isSetMutedVideos(value);
 	};
 
+	const handleFadingOut = value => {
+		console.log('STEP - handleFadingOut');
+		setIsFadingOut(value);
+	};
+
+	const handleVideoPreloaderRun = value => {
+		console.log('STEP - handleVideoPreloaderRun');
+		setIsVideoPreloaderRun(value);
+	};
+
 	const handleStartingTransition = (value, link, index) => {
-		console.log('STEP - 02');
-		setLinkNextPage(link);
-		setIndexBgTransitions(index);
+		if (value) {
+			console.log('STEP - 02');
+			setIndexBgTransitions(index);
+			setLinkNextPage(link);
+		} else {
+			console.log('STEP - 05');
+		}
 		isSetStartingTransition(value);
 	};
 
@@ -62,13 +74,15 @@ export const TransitionProvider = ({ children }) => {
 				handleFirstAccess,
 
 				primaryVideoUrls,
-				secondaryVideoUrls,
 
 				indexBgTransitions,
 				handleIndexBgTransitions,
 
 				isMutedVideos,
 				handleMutedVideos,
+
+				isFadingOut,
+				handleFadingOut,
 
 				isStartingTransition,
 				handleStartingTransition,

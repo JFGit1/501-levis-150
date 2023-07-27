@@ -6,6 +6,7 @@ const BgVideo = React.forwardRef(({ src, poster, className }, ref) => {
 		isFirstAccess,
 		handleFirstAccess,
 		isMutedVideos,
+		isStartingTransition,
 		isTransitionEnded,
 		handleSetTransitionEnded,
 	} = useTransition();
@@ -26,10 +27,22 @@ const BgVideo = React.forwardRef(({ src, poster, className }, ref) => {
 			videoRef.current.play();
 		}
 
+		console.log('ref:', ref);
 		if (ref) {
 			ref.current = videoRef.current;
+			console.log('ref:', '???');
 		}
-	}, [isTransitionEnded, ref]);
+
+		if (isStartingTransition) {
+			videoRef.current.pause();
+		} else {
+			console.log('----');
+			console.log('videoRef:', videoRef);
+			videoRef.currentTime = 0;
+			videoRef.muted = isMutedVideos;
+			videoRef.current.play();
+		}
+	}, [isStartingTransition, isTransitionEnded, ref]);
 
 	return (
 		<video

@@ -18,6 +18,15 @@ function Home() {
 
 	const { handleStartingTransition } = useTransition();
 
+	const handleClick = e => {
+		console.log('STEP - 01');
+		e.preventDefault();
+
+		const linkUrl = e.currentTarget.getAttribute('href');
+		const indexTransition = e.currentTarget.getAttribute('indextransition');
+		handleStartingTransition(true, linkUrl, indexTransition);
+	};
+
 	return (
 		<>
 			<Seo
@@ -40,19 +49,12 @@ function Home() {
 					<Link
 						href='/home'
 						indextransition='0'
-						className='text-white absolute z-50 top-2/4 right-4 -translate-y-1/2'
-						onClick={e => {
-							console.log('STEP - 01');
-							e.preventDefault();
-							const linkUrl = e.currentTarget.getAttribute('href');
-							const indexTransition =
-								e.currentTarget.getAttribute('indextransition');
-							handleStartingTransition(true, linkUrl, indexTransition);
-						}}>
+						onClick={handleClick}
+						className='text-white absolute z-50 top-2/4 right-4 -translate-y-1/2'>
 						<PiArrowCircleRightThin className='text-[64px] hover:text-[72px] hover:translate-x-2 origin-center transition-all duration-200' />
 					</Link>
 					{hasBgVideo && (
-						<BgVideo src={bgVideoSrc} poster={bgVideoPoster} au />
+						<BgVideo src={bgVideoSrc} poster={bgVideoPoster} />
 					)}
 				</div>
 			</LayoutMotion>
