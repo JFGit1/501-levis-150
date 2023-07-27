@@ -1,8 +1,8 @@
 import { AnimatePresence } from 'framer-motion';
 
 import { TransitionProvider } from '../contexts/transitionContext';
-import Transition from '../components/Transition';
-import Header from '../components/Header';
+import VideoPreloader from '../components/VideoPreloader';
+import VideoTransition from '../components/VideoTransition';
 
 import '@/src/styles/globals.css';
 
@@ -10,8 +10,8 @@ export default function App({ Component, pageProps, router }) {
 	return (
 		<>
 			<TransitionProvider>
-				<Transition />
-				{/* <Header /> */}
+				<VideoPreloader />
+				<VideoTransition />
 				<AnimatePresence
 					mode='wait'
 					initial={false}

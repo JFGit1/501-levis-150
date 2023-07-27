@@ -3,79 +3,83 @@ import React, { createContext, useContext, useState } from 'react';
 const TransitionContext = createContext();
 
 export const TransitionProvider = ({ children }) => {
+	const primaryVideoUrls = [
+		'/videos/Video-Transition-06-3--22.mp4',
+		'/videos/Video-Transition-07--22.mp4',
+	];
+
+	const secondaryVideoUrls = [
+		'/videos/501-denim-workshop-v1--32.mp4',
+		'/videos/501-one-take-v1--32.mp4',
+	];
+
 	const [isFirstAccess, isSetFirstAccess] = useState(true);
+	const [isMutedVideos, isSetMutedVideos] = useState(true);
+
 	const [isStartingTransition, isSetStartingTransition] = useState(false);
 	const [isTransitionInProgress, isSetTransitionInProgress] = useState(false);
-	const [isStartCapture, isSetStartCapture] = useState(false);
-	const [isBgVideoDisplay, setIsBgVideoDisplay] = useState(true);
 	const [isTransitionEnded, isSetTransitionEnded] = useState(false);
 
-	const [linkNextPage, setLinkNextPage] = useState('');
-	const [bgCapturedImage, setBgCapturedImage] = useState(null);
 	const [indexBgTransitions, setIndexBgTransitions] = useState(0);
+	const [linkNextPage, setLinkNextPage] = useState('');
 
-	const setFirstAccess = value => {
+	const handleFirstAccess = value => {
 		isSetFirstAccess(value);
 		console.log('isFirstAccess:', isFirstAccess);
 	};
 
-	const startCapture = (value, link) => {
-		console.log('STEP - 2');
-		isSetStartCapture(value);
+	const handleMutedVideos = value => {
+		console.log('STEP - handleMutedVideos');
+		isSetMutedVideos(value);
+	};
+
+	const handleStartingTransition = (value, link, index) => {
+		console.log('STEP - 02');
 		setLinkNextPage(link);
-	};
-
-	function transitionInProgress(value) {
-		console.log('STEP - 5');
-		isSetTransitionInProgress(value);
-	}
-
-	const handleBgCapturedImage = value => {
-		console.log('STEP - 7');
-		setBgCapturedImage(value);
-	};
-
-	const startingTransition = value => {
-		console.log('STEP - 9');
+		setIndexBgTransitions(index);
 		isSetStartingTransition(value);
 	};
 
-	const bgVideoDisplay = value => {
-		console.log('STEP - bgVideoDisplay ???');
-		setIsBgVideoDisplay(value);
+	const handleTransitionInProgress = value => {
+		console.log('STEP - handleTransitionInProgress');
+		isSetTransitionInProgress(value);
+	};
+
+	const handleSetTransitionEnded = value => {
+		console.log('STEP - handleSetTransitionEnded');
+		isSetTransitionEnded(value);
 	};
 
 	const handleIndexBgTransitions = value => {
-		console.log('STEP - handleIndexBgTransitions ???');
+		// console.log('STEP - handleIndexBgTransitions');
 		setIndexBgTransitions(value);
-	};
-
-	const transitionEnded = value => {
-		console.log('STEP - 15');
-		console.log('*** End');
-		isSetStartingTransition(value);
 	};
 
 	return (
 		<TransitionContext.Provider
 			value={{
 				isFirstAccess,
-				setFirstAccess,
-				isStartCapture,
-				startCapture,
-				isStartingTransition,
-				startingTransition,
-				isTransitionInProgress,
-				transitionInProgress,
-				bgCapturedImage,
-				handleBgCapturedImage,
-				linkNextPage,
-				isTransitionEnded,
-				isSetTransitionEnded,
-				isBgVideoDisplay,
-				bgVideoDisplay,
+				handleFirstAccess,
+
+				primaryVideoUrls,
+				secondaryVideoUrls,
+
 				indexBgTransitions,
 				handleIndexBgTransitions,
+
+				isMutedVideos,
+				handleMutedVideos,
+
+				isStartingTransition,
+				handleStartingTransition,
+
+				isTransitionInProgress,
+				handleTransitionInProgress,
+
+				isTransitionEnded,
+				handleSetTransitionEnded,
+
+				linkNextPage,
 			}}>
 			{children}
 		</TransitionContext.Provider>

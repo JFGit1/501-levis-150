@@ -2,49 +2,44 @@ import React, { useEffect, useRef } from 'react';
 import { useTransition } from '@/src/contexts/transitionContext';
 
 const BgVideo = React.forwardRef(({ src, poster, className }, ref) => {
-	const videoRef = useRef(null);
-
 	const {
 		isFirstAccess,
-		setFirstAccess,
+		handleFirstAccess,
+		isMutedVideos,
 		isTransitionEnded,
-		isSetTransitionEnded,
+		handleSetTransitionEnded,
 	} = useTransition();
+
+	const videoRef = useRef(null);
+	const bgVideoMuted = isMutedVideos;
 
 	src = src || '';
 	poster = poster || '';
 	className = className || 'bg-video-player';
 
 	useEffect(() => {
-		if (isFirstAccess) {
-			console.log('Background video started');
-			videoRef.defaultPlaybackRate = 16;
-			videoRef.current.play();
-			setFirstAccess(false);
-		}
-
 		if (isTransitionEnded === true) {
 			console.log('isTransitionEnded:', isTransitionEnded);
-			isSetTransitionEnded(false);
+			handleSetTransitionEnded(false);
 			console.log('Play BG Video');
 			videoRef.currentTime = 0;
-			videoRef.defaultPlaybackRate = 16;
 			videoRef.current.play();
 		}
 
 		if (ref) {
 			ref.current = videoRef.current;
 		}
-	}, [isFirstAccess, isTransitionEnded, ref]);
+	}, [isTransitionEnded, ref]);
 
 	return (
 		<video
 			ref={videoRef}
 			className={className}
 			poster={poster}
-			muted={true}
 			controls={false}
 			loop
+			muted={bgVideoMuted}
+			autoPlay
 			style={{
 				height: '100%',
 				left: '0px',

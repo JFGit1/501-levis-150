@@ -1,42 +1,58 @@
 import React, { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
+import { useRouter } from 'next/router';
+
+// import { gsap } from 'gsap';
 import { useTransition } from '@/src/contexts/transitionContext';
 
-const VideoTransition = ({ videoSrc, showVideo, handleEndedVideo }) => {
+const VideoTransition = () => {
+	const {
+		isStartingTransition,
+		handleStartingTransition,
+		primaryVideoUrls,
+		indexBgTransitions,
+		linkNextPage,
+	} = useTransition();
+
+	const router = useRouter();
+	let videoSrc = primaryVideoUrls[indexBgTransitions];
 	const videoRef = useRef(null);
 	const videoContainerRef = useRef(null);
 	const batMaskedRef = useRef(null);
-
-	const { isTransitionEnded, isSetTransitionEnded } = useTransition();
 
 	useEffect(() => {
 		const video = videoRef.current;
 		const videoContainer = videoContainerRef.current;
 		const batMasked = batMaskedRef.current;
 
-		if (showVideo) {
-			console.log('STEP - 12');
+		if (isStartingTransition) {
+			console.log('STEP - 03');
 
-			gsap.fromTo(
+			videoSrc = primaryVideoUrls[indexBgTransitions];
+
+			setTimeout(() => {
+				router.push(linkNextPage);
+			}, 1000);
+
+			/* gsap.fromTo(
 				videoContainer,
-				{ opacity: 0, scale: 1.15 },
+				{ opacity: 0 },
 				{
-					delay: 0.2,
+					// delay: 0.2,
 					opacity: 1,
-					scale: 1,
 					duration: 0.7,
 					ease: 'power2.out',
 				}
-			);
+			); */
+			batMasked.classList.remove('bat-scale-down');
+			batMasked.classList.add('bat-scale-up');
 
 			const endedVideo = () => {
 				video.pause();
 				batMasked.classList.add('bat-scale-down');
 				batMasked.classList.remove('bat-scale-up');
 				setTimeout(() => {
-					console.log('STEP - 13');
-					handleEndedVideo();
-					isSetTransitionEnded(true);
+					console.log('STEP - 04');
+					handleStartingTransition(false);
 				}, 1000);
 			};
 
@@ -50,22 +66,23 @@ const VideoTransition = ({ videoSrc, showVideo, handleEndedVideo }) => {
 				video.removeEventListener('ended', endedVideo);
 			};
 		}
-	}, [showVideo]);
+	}, [isStartingTransition]);
 
 	return (
 		<>
-			{showVideo && (
+			{isStartingTransition && (
 				<div
 					ref={videoContainerRef}
 					className={`video-transition ${
-						showVideo ? 'visible' : ''
-					} fixed top-0 left-0 z-[120] w-screen h-screen opacity-0`}>
+						isStartingTransition ? 'visible' : ''
+					} fixed top-0 left-0 z-[120] w-screen h-screen opacity-100`}>
 					<div id='batMasked'>
 						<video
 							ref={videoRef}
 							className='absolute object-cover top-0 left-0 z-50 w-screen h-screen'
 							src={videoSrc}
 							muted
+							autoPlay
 						/>
 					</div>
 					<svg id='batLogo' height={0} width={0}>
