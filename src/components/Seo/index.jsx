@@ -13,7 +13,7 @@ export default function Seo({ title, description, image }) {
 			<meta name='robots' content='max-image-preview:large' />
 			<link
 				rel='shortcut icon'
-				href='../../../images/favicon.png'
+				href='../../../bat-favicon.png'
 				type='image/x-icon'
 			/>
 			<meta name='title' content={title} />

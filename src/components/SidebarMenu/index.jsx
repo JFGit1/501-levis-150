@@ -43,7 +43,7 @@ const SidebarMenu = () => {
 				<div
 					className={`${
 						isMutedVideos
-							? 'bg-primary hover:bg-primary'
+							? 'bg-primary/60 hover:bg-primary'
 							: 'bg-black/25 hover:bg-black'
 					}  w-11 h-11 relative cursor-pointer rounded-l-lg transition-all duration-500`}
 					onClick={toggleMutedVideos}>
@@ -65,7 +65,7 @@ const SidebarMenu = () => {
 				<div
 					className={`${
 						isMenuOpen
-							? 'bg-primary hover:bg-primary'
+							? 'bg-primary/60 hover:bg-primary'
 							: 'bg-black/25 hover:bg-black'
 					}  w-11 h-11 relative cursor-pointer rounded-r-lg transition-all duration-500`}
 					onClick={toggleMenu}>
